@@ -22,9 +22,9 @@ class StationInfo(TypedDict):
     value: float
 
 
-def get_deep_color(value):
+def get_deep_color(value, max_value):
     # Clampataan arvo välille [0.0, clamp_max]
-    clamp_max = 5.0
+    clamp_max = max_value
     clamped_value = min(max(value, 0.0), clamp_max)
 
     # Normalisoidaan arvo välille [0, 1]
@@ -71,11 +71,12 @@ def plot_icing_map(station_data: list[StationInfo]) -> folium.Map:
         folium.Map: Map object with station markers.
     """
     m = folium.Map(location=[64.5, 23], zoom_start=5)
+    max_value = max(station['value'] for station in station_data)
 
     for station in station_data:
         value = station['value']
         rounded_value = round(value, 1)
-        color = get_deep_color(rounded_value)
+        color = get_deep_color(rounded_value, max_value)
 
         # if rounded_value <= 0.0:
         #     # color = 'gray'
