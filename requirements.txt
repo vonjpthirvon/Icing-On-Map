@@ -52,7 +52,6 @@ parso
 pickleshare
 pillow
 platformdirs
-plotly
 prompt_toolkit
 protobuf
 psutil
