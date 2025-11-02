@@ -30,6 +30,9 @@ def get_deep_color(value, max_value):
     # Normalisoidaan arvo välille [0, 1]
     normalized_value = clamped_value / clamp_max
 
+    # Käännetään järjestys
+    normalized_value = max(0.0, 1-normalized_value)
+
     # Haetaan deep-paletti cmoceanista
     # cmap = cmocean.cm.deep
     cmap = cmocean.cm.ice
