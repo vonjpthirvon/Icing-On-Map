@@ -25,7 +25,7 @@ conda env create -f environment.yml
 
 # Aktivoi ympäristö
 conda activate icing-on-map-env
-
+``
 ## Asennus pip-ympäristöllä
 
 Voit luoda ja aktivoida virtuaaliympäristön sekä asentaa riippuvuudet seuraavasti:
