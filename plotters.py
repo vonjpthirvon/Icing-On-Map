@@ -32,7 +32,8 @@ def get_deep_color(value, max_value):
 
     # Haetaan deep-paletti cmoceanista
     # cmap = cmocean.cm.deep
-    cmap = cmocean.cm.ice
+    # cmap = cmocean.cm.ice
+    cmap = cmocean.cm.matter
 
     # Haetaan RGBA-väri
     rgba = cmap(normalized_value)
