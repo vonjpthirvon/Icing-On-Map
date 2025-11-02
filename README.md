@@ -25,7 +25,7 @@ conda env create -f environment.yml
 
 # Aktivoi ympäristö
 conda activate icing-on-map-env
-``
+```
 ## Asennus pip-ympäristöllä
 
 Voit luoda ja aktivoida virtuaaliympäristön sekä asentaa riippuvuudet seuraavasti:
@@ -37,21 +37,11 @@ source venv/bin/activate  # tai Windowsissa: venv\Scripts\activate
 
 # Asenna riippuvuudet
 pip install -r requirements.txt
-
+```
 
 ## Käyttö
 
 ```bash
 streamlit run main.py
-
-## Asennus Conda-ympäristöllä
-
-Voit luoda ja aktivoida conda-ympäristön seuraavilla komennoilla:
-
-```bash
-# Luo uusi conda-ympäristö
-conda env create -f environment.yml
-
-# Aktivoi ympäristö
-conda activate icing-on-map-env
 ```
+avaa selaimeen http://localhost:8501 sovelman
