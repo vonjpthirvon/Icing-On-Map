@@ -1,6 +1,10 @@
 # Icing On Map
 
-Streamlit-sovellus, joka visualisoi jään kertymistä sääasemilla Suomessa. Sovellus hakee jäätämishavaintodataa FMI:n OpenData-rajapinnasta, laskee jään kertymän ja näyttää tulokset interaktiivisella kartalla ja kuvaajina.
+Streamlit-sovellus, joka visualisoi jään kertymistä sääasemilla Suomessa. Sovellus hakee jäätämishavaintodataa FMI:n OpenData-rajapinnasta [1], laskee jään kertymän ja näyttää tulokset interaktiivisella kartalla ja kuvaajina. Jään kertymä lasketaan menetelmällä, joka on esitetty julkaisussa [2].
+
+Kartalla esitetään jään kokonaiskertymä millimetreinä valitun ajanjakson aikana eli kertymä loppuhetkellä. Kertymä ei ota huomioon mahdollisesti ajanjakson aikana tapahtuvaa jään sulamista.
+
+Kartan alapuolelle on mahdollista saada näkyville jään kertymäkuvaaja valitulle ajanjaksolle. Kuvaajassa ylimmässä paneelissa on jään kertymät kahdella eri menetelmällä laskettuna: menetelmä [2] vihreä käyrä ja punainen käyrä [2] lisäksi keskiarvosuodatusta ja kynnystystä vesisateen poistamiseksi. Toinen paneeli laitteen raakasignaali MSO-taajuus (fzfreq) ja tästä laskettu 10 minuutin minimitaajuus (fz10min). Kolmas paneeli NFC (net frequency change) eli taajuuden muutoksesta lasketut hetkelliset jään kertymät yksikössä mm/1min tavallinen ja keskiarvosuodatettu. Neljäs ja alin paneelit NFC eli netto taajuuden muutokset tavallisella menetelmällä [2] sekä keskiarvosuodatuksella, respectively.
 
 ## Ominaisuudet
 
@@ -10,8 +14,8 @@ Streamlit-sovellus, joka visualisoi jään kertymistä sääasemilla Suomessa. S
 - Automaattinen datan haku ja suodatus
 
 ## Lähteitä:
-- FMI OpenData API: http://opendata.fmi.fi
-- Jään kertymän laskenta perustuu julkaisuun: https://doi.org/10.1175/JAM2535.1
+- [1] FMI OpenData API: http://opendata.fmi.fi
+- [2] Jään kertymän laskenta perustuu julkaisuun: https://doi.org/10.1175/JAM2535.1 "Ryerson & Ramsay (2006)"
 
 ## Asennus
 
