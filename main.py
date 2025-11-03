@@ -187,7 +187,7 @@ def main():
                     df = fetch_icedata(FMISID, starttime, endtime, place, sensor_id)
                 else:
                     df = fetch_icedata(FMISID, starttime, endtime, place)
-                print(f"{i}, {repr(place)}, {FMISID}, {sensor_id}")
+                print(f"{i}, {place}, {FMISID}, {sensor_id}")
 
                 if df is None or df.empty:
                     st.warning(f"No data for {place}")

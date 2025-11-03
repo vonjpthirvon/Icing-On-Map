@@ -221,7 +221,7 @@ def fetch_icedata(FMISID: int, starttime: str, endtime: str, place: str = None, 
 
     # Print URL for debugging purposes just in case.
     # st.info(prepared.url)
-    # print(prepared.url)
+    print(prepared.url)
 
     # Download data
     response = requests.get(prepared.url)

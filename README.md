@@ -17,8 +17,6 @@ Kartan alapuolelle on mahdollista saada näkyville jään kertymäkuvaaja valitu
 - [1] FMI OpenData API: http://opendata.fmi.fi
 - [2] Jään kertymän laskenta perustuu julkaisuun: https://doi.org/10.1175/JAM2535.1 "Ryerson & Ramsay (2006)"
 
-## Asennus
-
 ## Asennus Conda-ympäristöllä
 
 Voit luoda ja aktivoida conda-ympäristön seuraavilla komennoilla:
