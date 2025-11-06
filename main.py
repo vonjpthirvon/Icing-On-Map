@@ -113,7 +113,11 @@ def main():
                         if s["name"] == station_name), None)
             if idx is not None:
                 df, place, FMISID = st.session_state.df_data[idx]
-                fig = plot_icegraph(df, place, FMISID, starttime, endtime)
+                fig = plot_icegraph(
+                    df, place, FMISID, 
+                    start_datetime, 
+                    end_datetime
+                    )
                 # fig = st.session_state.figure_data[idx]
                 buf = BytesIO()
                 fig.savefig(buf, format="png")

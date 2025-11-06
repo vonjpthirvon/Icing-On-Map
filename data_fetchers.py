@@ -178,7 +178,12 @@ def calculate_icing(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 # @st.cache_data
-def fetch_icedata(FMISID: int, starttime: str, endtime: str, place: str = None, sensor_id: int = None) -> pd.DataFrame:
+def fetch_icedata(
+    FMISID: int, 
+    starttime: str, 
+    endtime: str, 
+    place: str = None, 
+    sensor_id: int = None) -> pd.DataFrame:
     """ Valitaan paikkakunta ja tarkasteluaika, Jäätävä räntä nuoskatykky, ehkä jäätävä sumu,
     clambing/bridging tapahtuu klo 12UTC, mutta jäätäminenkin (nuoskatykky) voi jatkua vielä EFMA 22.12.2023 klo 12 UTC
     lumisade tuulen kanssa ja nollakeli jatkuu tuolloin myös
