@@ -180,8 +180,9 @@ def plot_icegraph(
     for ax in axes:
         ax.set_xlim(pd.Timestamp(starttime), pd.Timestamp(endtime))
 
-        if duration <= timedelta(hours=6):
-            ax.xaxis.set_major_locator(mdates.HourLocator(byhour=range(0, 24, 1)))
+        if duration <= timedelta(hours=9):
+            # ax.xaxis.set_major_locator(mdates.HourLocator(byhour=range(0, 24, 1)))
+            ax.xaxis.set_major_locator(mdates.MinuteLocator(interval=30))
             ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
 
             # Väli-merkinnät (minor ticks) joka tunti tai muuten erilainen
