@@ -14,6 +14,7 @@ import streamlit as st
 import pandas as pd
 import cmocean
 import matplotlib.colors as mcolors
+from datetime import datetime, time, timedelta, date
 
 class StationInfo(TypedDict):
     name: str
@@ -126,8 +127,8 @@ def plot_icegraph(
     df: pd.DataFrame,
     place: str,
     fmisid: int,
-    starttime: str,
-    endtime: str,
+    start_datetime: datetime,
+    end_datetime: datetime,
     sensor_id: int = None
 ) -> plt.Figure:
     """
@@ -137,8 +138,8 @@ def plot_icegraph(
         df (pd.DataFrame): DataFrame containing processed icing data.
         place (str): Name of the weather station.
         fmisid (int): FMI station ID.
-        starttime (str): Start time in format YYYYMMDDTHHMM.
-        endtime (str): End time in format YYYYMMDDTHHMM.
+        start_datetime (datetime): Start time in format YYYYMMDDTHHMM.
+        end_datetime (datetime)): End time in format YYYYMMDDTHHMM.
         sensor_id (int, optional): Sensor ID if multiple sensors are used.
 
     Returns:
@@ -149,6 +150,13 @@ def plot_icegraph(
             - Net frequency change (NFC)
             - Filtered NFC
     """
+        # Plotattavan jakson pituus
+    duration = end_datetime - start_datetime
+
+    # Muunna tekstiksi
+    starttime = start_datetime.strftime("%Y%m%dT%H%M")
+    endtime   = end_datetime.strftime("%Y%m%dT%H%M")
+
     if sensor_id is not None:
         fzfreq_label = f"fzfreq#{sensor_id}"
     else:
@@ -171,9 +179,42 @@ def plot_icegraph(
     axes = [ax1, ax2, ax3, ax4, ax5]
     for ax in axes:
         ax.set_xlim(pd.Timestamp(starttime), pd.Timestamp(endtime))
-        ax.xaxis.set_major_locator(mdates.HourLocator(byhour=range(0, 24, 3)))
-        ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
-        ax.xaxis.set_minor_locator(mdates.HourLocator(interval=1))
+
+        if duration <= timedelta(hours=6):
+            ax.xaxis.set_major_locator(mdates.HourLocator(byhour=range(0, 24, 1)))
+            ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
+
+            # Väli-merkinnät (minor ticks) joka tunti tai muuten erilainen
+            # ax.xaxis.set_minor_locator(mdates.HourLocator(interval=1))
+            ax.xaxis.set_minor_locator(mdates.MinuteLocator(interval=15))
+            plt.xlabel("Kellonaika")
+
+        elif duration <= timedelta(days=3):
+            ax.xaxis.set_major_locator(mdates.HourLocator(byhour=range(0, 24, 3)))
+            ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
+
+            # Väli-merkinnät (minor ticks) joka tunti tai muuten erilainen
+            ax.xaxis.set_minor_locator(mdates.HourLocator(interval=1))
+            plt.xlabel("Kellonaika")
+        elif duration <= timedelta(days=8):
+            ax.xaxis.set_major_locator(mdates.HourLocator(byhour=range(0, 24, 6)))
+            ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
+
+            # Väli-merkinnät (minor ticks) joka tunti
+            ax.xaxis.set_minor_locator(mdates.HourLocator(interval=3))
+            plt.xlabel("Kellonaika")
+        else:
+            ax.xaxis.set_major_locator(mdates.HourLocator(byhour=range(0, 24, 24)))
+            # ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
+            ax.xaxis.set_major_formatter(mdates.DateFormatter('%d'))
+
+            # Väli-merkinnät (minor ticks) joka tunti
+            ax.xaxis.set_minor_locator(mdates.HourLocator(interval=12))
+            plt.xlabel("Päivän numero")
+
+        # ax.xaxis.set_major_locator(mdates.HourLocator(byhour=range(0, 24, 3)))
+        # ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
+        # ax.xaxis.set_minor_locator(mdates.HourLocator(interval=1))
         ax.grid(which='major', linestyle='-', linewidth=0.8, color='gray')
         ax.grid(which='minor', linestyle='--', linewidth=0.5, color='lightgray')
         ax.legend()
@@ -193,7 +234,7 @@ def plot_icegraph(
     ax5.set_ylabel("NFC_new/dHz")
     ax5.set_title("Net Frequency Change Filtered")
 
-    plt.xlabel("Kellonaika")
+    # plt.xlabel("Kellonaika")
     title = f"{place}#{sensor_id}: {fmisid}" if sensor_id else f"{place}: {fmisid}"
     plt.suptitle(f"{title}: {starttime}-{endtime} UTC")
     plt.tight_layout(rect=[0, 0, 1, 0.98])
