@@ -1,0 +1,49 @@
+# pyproject.toml — Icing-On-Map
+
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "icing-on-map"
+version = "0.1.0"
+description = "Karttasovellus jäätämisdatan hakemiseen ja visualisointiin (dev)"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Hirvonen Jarkko" }]
+
+# Riippuvuudet — säädä oman koodisi mukaan
+dependencies = [
+  # oma kirjastonne dev-branchista GitHubista
+  "icing-utils @ git+https://github.com/vonjpthirvon/icing_utils.git@dev",
+
+  # yleiset kirjastot, joita Icing-On-Map tyypillisesti tarvitsee
+  "pandas",
+  "numpy",
+  "requests",
+  "matplotlib",
+  "cmocean",
+  "chardet",
+  "folium",
+  "streamlit",
+]
+
+# (valinnainen) komentorivikäynnistin, jos sinulla on main-funktio
+# muuta polku vastaamaan todellista moduulia/funktiota
+#[project.scripts]
+#icing-on-map = "icing_on_map.main:main"
+
+# Pakettilöytyminen: etsi paketit juuresta, jotka alkavat 'icing_on_map'
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["icing_on_map*"]
+
+# (valinnainen) datatiedostot mukaan pakettiin
+#[tool.setuptools]
+#include-package-data = true
+
+# (valinnainen) jos tarvitset uusien pip-versioiden kanssa sdist- ja wheel-rakennuksia
+#[tool.setuptools.dynamic]
+# Esimerkki: hae versionumero Python-moduulista
+# version = { attr = "icing_on_map.__version__" }

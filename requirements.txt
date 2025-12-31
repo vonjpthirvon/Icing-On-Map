@@ -8,3 +8,5 @@ requests
 chardet
 python-dateutil
 cmocean
+# asentaa aina dev-haaran HEADin
+icing-utils @ git+https://github.com/vonjpthirvon/icing_utils.git@dev

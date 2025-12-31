@@ -2,8 +2,10 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime, time, timedelta, date
 from dateutil.relativedelta import relativedelta
-from data_fetchers import fetch_icedata
-from plotters import plot_icegraph, extract_station_info, plot_icing_map
+# from data_fetchers import fetch_icedata
+# from plotters import plot_icegraph, extract_station_info, plot_icing_map
+from icing_utils.data_fetchers import fetch_icedata
+from icing_utils.plotters import plot_icegraph, plot_parameter, extract_station_info, plot_icing_map
 from streamlit_folium import st_folium
 from io import BytesIO
 import matplotlib.pyplot as plt
@@ -33,17 +35,56 @@ def main():
         st.info("All stations selected.")
         selected_places = list(places.keys())
 
-    today = date.today()
-    tomorrow = today + timedelta(days=1)
+    # today = date.today()
+    # # tomorrow = today + timedelta(days=1)
+    # yesterday = today + timedelta(days=-1)
+
+    # # Nykyhetki
+    # # now = datetime.now()
+    # # Start time = 24h taaksepäin
+    # # start_default = (now - timedelta(hours=24)).time()
+
+    # # End time = nykyhetki
+    # # end_default = now.time()
+
+    # col1, col2 = st.columns(2)
+    # with col1:
+    #     # start_date = st.date_input("Start Date:", value=today)
+    #     # end_date = st.date_input("End Date:", value=tomorrow)
+    #     start_date = st.date_input("Start Date:", value=yesterday)
+    #     end_date = st.date_input("End Date:", value=today)
+    # with col2:
+    #     # Nykyhetki
+    #     now = datetime.now()
+    #     # Start time = 24h taaksepäin
+    #     start_default = (now - timedelta(hours=24)).time()
+    #     # End time = nykyhetki
+    #     end_default = now.time()
+    #     start_time = st.time_input("Start Time:", value=start_default)
+    #     end_time = st.time_input("End Time:", value=end_default)
+    #     # start_time = st.time_input("Start Time:", value=time(0, 0))
+    #     # end_time = st.time_input("End Time:", value=time(0, 0))
+
+ 
+    # --- Päivämäärä ja aika: initialisointi vain kerran ---
+    # Nykyhetki
+    now = datetime.now()
+    prev24 = now - timedelta(hours=24)
+
+    # Aseta oletukset vain jos ei ole vielä arvoja session_statessa
+    st.session_state.setdefault("start_date", prev24.date())
+    st.session_state.setdefault("end_date", now.date())
+    st.session_state.setdefault("start_time", prev24.time())
+    st.session_state.setdefault("end_time", now.time())
 
     col1, col2 = st.columns(2)
     with col1:
-        start_date = st.date_input("Start Date:", value=today)
-        end_date = st.date_input("End Date:", value=tomorrow)
+        start_date = st.date_input("Start Date:", key="start_date")
+        end_date = st.date_input("End Date:", key="end_date")
     with col2:
-        start_time = st.time_input("Start Time:", value=time(0, 0))
-        end_time = st.time_input("End Time:", value=time(0, 0))
-
+        start_time = st.time_input("Start Time:", key="start_time")
+        end_time = st.time_input("End Time:", key="end_time")
+        
     start_datetime = datetime.combine(start_date, start_time)
     end_datetime = datetime.combine(end_date, end_time)
 
@@ -75,7 +116,7 @@ def main():
                     df = fetch_icedata(FMISID, starttime, endtime, place, sensor_id)
                 else:
                     df = fetch_icedata(FMISID, starttime, endtime, place)
-                print(f"{i}, {place}, {FMISID}, {sensor_id}")
+                # print(f"{i}, {place}, {FMISID}, {sensor_id}")
 
                 if df is None or df.empty:
                     st.warning(f"No data for {place}")
