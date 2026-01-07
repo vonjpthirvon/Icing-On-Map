@@ -3,6 +3,11 @@ __pycache__/
 *.py[cod]
 *.pyo
 
+# PyInstaller build artefacts
+build/
+dist/
+*.spec
+
 # Streamlitin istuntotila
 *.streamlit/
 
@@ -41,4 +46,10 @@ htmlcov/
 .cache/
 nosetests.xml
 coverage.xml
-*.test
+*.testbuild/
+dist/
+*.spec
+__pycache__/
+*.pyc
+*.egg-info/
+*.dist-info/
