@@ -53,3 +53,4 @@ __pycache__/
 *.pyc
 *.egg-info/
 *.dist-info/
+assets/
